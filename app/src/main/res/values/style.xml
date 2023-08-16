@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.MyInstagram.FormEditText" >
+    <style name="Theme.MyInstagram.FormEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:background">@drawable/edit_text_login</item>
         <item name="android:padding">16dp</item>
+
+    </style>
+    <style name="Theme.MyInstagram.FormEditTextInput"  parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">28dp</item>
+
 
     </style>
     <style name="Theme.MyInstagram.FormButton" parent="Widget.MaterialComponents.Button">
