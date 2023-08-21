@@ -57,10 +57,12 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.example.myinstagram.LoadingButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/btn_login"
-                style="@style/Theme.MyInstagram.FormButton"
-                android:text="Entrar" />
+                android:enabled="false"
+                app:text="@string/enter"/>
 
             <FrameLayout
                 android:id="@+id/frame"
