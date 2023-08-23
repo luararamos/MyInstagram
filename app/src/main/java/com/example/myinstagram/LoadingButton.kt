@@ -15,11 +15,11 @@ class LoadingButton : FrameLayout {
     private var text: String? = null
 
     constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         setup(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context, attrs,
         defStyleAttr
     ) {
@@ -27,12 +27,14 @@ class LoadingButton : FrameLayout {
     }
 
     private fun setup(context: Context, attrs: AttributeSet?) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater: LayoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.button_loading, this)
 
         val typeArray = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0)
         text = typeArray.getString(R.styleable.LoadingButton_text)
 
+        // mudei no layout para merge para assim o index 0 for apenas elementos e não tipos de layout(Constraint, Frame)
         button = getChildAt(0) as Button
         progress = getChildAt(1) as ProgressBar
 
@@ -45,6 +47,10 @@ class LoadingButton : FrameLayout {
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
+        button.isEnabled = enabled
+    }
+
+    fun showProgressBar(enabled: Boolean) {
         if (enabled) {
             button.text = text
             button.isEnabled = true
@@ -55,6 +61,11 @@ class LoadingButton : FrameLayout {
             progress.visibility = View.GONE
         }
     }
+
+    override fun setOnClickListener(l: OnClickListener?) {
+        button.setOnClickListener(l)
+    }
+
 
 }
 

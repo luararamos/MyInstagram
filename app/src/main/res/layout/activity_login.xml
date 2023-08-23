@@ -58,11 +58,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.example.myinstagram.LoadingButton
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_login"
                 android:enabled="false"
-                app:text="@string/enter"/>
+                app:text="@string/enter" />
 
             <FrameLayout
                 android:id="@+id/frame"

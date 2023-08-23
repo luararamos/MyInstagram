@@ -1,6 +1,8 @@
 package com.example.myinstagram
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
@@ -16,13 +18,14 @@ class LoginActivity : AppCompatActivity() {
         binding.editEmail.addTextChangedListener(watcher)
         binding.editPassword.addTextChangedListener(watcher)
 
-        binding.editEmail.setOnClickListener {
-            binding.editEmail.error = "Esse email é inválido"
-            binding.editPassword.error = "Senha inválida"
+        binding.btnLogin.setOnClickListener {
+            binding.btnLogin.showProgressBar(true)
+            binding.editEmail.error = "Esse e-mail é inválido"
+            binding.editPassword.error = "Senha incorreta"
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.btnLogin.showProgressBar(false)
+            },2000)
         }
-
-
-
 
     }
 
