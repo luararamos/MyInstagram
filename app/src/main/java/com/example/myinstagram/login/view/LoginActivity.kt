@@ -1,4 +1,4 @@
-package com.example.myinstagram
+package com.example.myinstagram.login.view
 
 import android.os.Bundle
 import android.os.Handler
