@@ -52,12 +52,12 @@ class LoadingButton : FrameLayout {
 
     fun showProgressBar(enabled: Boolean) {
         if (enabled) {
-            button.text = text
-            button.isEnabled = true
-            progress.visibility = View.VISIBLE
-        } else {
             button.text = ""
             button.isEnabled = false
+            progress.visibility = View.VISIBLE
+        } else {
+            button.text = text
+            button.isEnabled = true
             progress.visibility = View.GONE
         }
     }

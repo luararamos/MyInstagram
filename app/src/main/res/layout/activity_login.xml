@@ -39,6 +39,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_email"
                     style="@style/Theme.MyInstagram.FormEditText"
+                    android:autofillHints="@null"
                     android:hint="Email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -53,6 +54,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_password"
                     style="@style/Theme.MyInstagram.FormEditText"
+                    android:autofillHints="@null"
                     android:hint="Senha"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
