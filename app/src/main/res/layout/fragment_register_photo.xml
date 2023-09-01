@@ -42,12 +42,17 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
-            <com.example.myinstagram.LoadingButton
+            <com.example.myinstagram.login.view.LoadingButton
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 app:text="@string/next" />
+
+            <Button
+                android:id="@+id/register_btn_jump"
+                android:text="@string/jump"
+                style="@style/Theme.MyInstagram.TextViewBase.Link"/>
 
 
 
