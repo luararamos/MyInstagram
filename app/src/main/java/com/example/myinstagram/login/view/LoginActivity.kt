@@ -15,16 +15,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.editEmail.addTextChangedListener(watcher)
-        binding.editPassword.addTextChangedListener(watcher)
+        with(binding) {
+            editEmail.addTextChangedListener(watcher)
+            editPassword.addTextChangedListener(watcher)
 
-        binding.btnLogin.setOnClickListener {
-            binding.btnLogin.showProgressBar(true)
-            binding.editEmail.error = "Esse e-mail é inválido"
-            binding.editPassword.error = "Senha incorreta"
+            btnLogin.setOnClickListener {
+
+                btnLogin.showProgressBar(true)
+                editEmail.error = "Esse e-mail é inválido"
+                editPassword.error = "Senha incorreta"
+            }
             Handler(Looper.getMainLooper()).postDelayed({
-                binding.btnLogin.showProgressBar(false)
-            },2000)
+                btnLogin.showProgressBar(false)
+            }, 2000)
         }
 
     }

@@ -9,8 +9,16 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
 import com.example.myinstagram.common.view.CustomDialog
+import com.example.myinstagram.databinding.ActivityLoginBinding
+import com.example.myinstagram.databinding.FragmentRegisterPhotoBinding
 
-class RegisterPhotoFragment : Fragment() {
+class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
+
+    private var binding: FragmentRegisterPhotoBinding?= null
+    override fun onDestroy() {
+        binding= null
+        super.onDestroy()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,6 +29,9 @@ class RegisterPhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentRegisterPhotoBinding.bind(view)
+
         val customDialog = CustomDialog(requireContext())
         customDialog.setTitle(R.string.define_photo_profile)
         customDialog.addButton(R.string.photo, R.string.gallery) {
