@@ -3,9 +3,8 @@ package com.example.myinstagram.login.view
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myinstagram.common.view.util.TxtWatcher
 import com.example.myinstagram.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -32,15 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private val watcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            binding.btnLogin.isEnabled = s.toString().isNotEmpty()
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-        }
+    private val watcher = TxtWatcher {
+        binding.btnLogin.isEnabled = it.isNotEmpty()
     }
 }
