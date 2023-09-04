@@ -16,19 +16,27 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white">
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/main_toolbar"
                 app:layout_scrollFlags="scroll|enterAlways"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/app_name"/>
+                android:layout_height="?attr/actionBarSize">
+                <ImageView
+                    android:src="@drawable/instagram_logo_black"
+                    android:layout_width="100dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null" />
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <fragment
             android:id="@+id/main_fragment"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:name="com.example.myinstagram.profile.view.ProfileFragment"
+            android:name="com.example.myinstagram.camera.view.CameraFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_profile"
+            tools:layout="@layout/fragment_gallery"
             tools:ignore="FragmentTagUsage" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
