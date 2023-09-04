@@ -6,8 +6,9 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myinstagram.common.view.util.TxtWatcher
 import com.example.myinstagram.databinding.ActivityLoginBinding
+import com.example.myinstagram.login.Login
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), Login.View {
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
             btnLogin.setOnClickListener {
 
-                btnLogin.showProgressBar(true)
+
                 editEmail.error = "Esse e-mail é inválido"
                 editPassword.error = "Senha incorreta"
             }
@@ -33,5 +34,29 @@ class LoginActivity : AppCompatActivity() {
 
     private val watcher = TxtWatcher {
         binding.btnLogin.isEnabled = it.isNotEmpty()
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        binding.btnLogin.showProgressBar(enabled)
+    }
+
+    override fun displayEmailFailure(emailError: Int?) {
+        binding.editEmail.error = emailError?.let {
+            getString(it)
+        }
+    }
+
+    override fun displayPasswordFailure(passwordError: Int?) {
+        binding.editPassword.error = passwordError?.let {
+            getString(it)
+        }
+    }
+
+    override fun onUserAutheticated() {
+        // Ir para tela inicial
+    }
+
+    override fun onUserUnauthorized() {
+        // Mostrar um alerta
     }
 }
