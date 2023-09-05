@@ -1,4 +1,4 @@
-package com.example.myinstagram.common.view.util
+package com.example.myinstagram.common.util
 
 import android.text.Editable
 import android.text.TextWatcher

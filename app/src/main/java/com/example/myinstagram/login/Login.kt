@@ -1,12 +1,20 @@
 package com.example.myinstagram.login
 
+import com.example.myinstagram.common.base.BasePresenter
+import com.example.myinstagram.common.base.BaseView
+
 interface Login {
+    // camada presenter
+    interface Presenter : BasePresenter {
+        fun login(email: String, password: String)
+    }
+
     //camada de view
-    interface View{
+    interface View : BaseView<Presenter> {
         fun showProgress(enabled: Boolean)
         fun displayEmailFailure(emailError: Int?)
         fun displayPasswordFailure(passwordError: Int?)
-        fun onUserAutheticated()
+        fun onUserAuthenticated()
         fun onUserUnauthorized()
     }
 
