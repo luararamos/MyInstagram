@@ -1,12 +1,16 @@
 package com.example.myinstagram.login.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myinstagram.common.util.TxtWatcher
 import com.example.myinstagram.databinding.ActivityLoginBinding
 import com.example.myinstagram.login.Login
+import com.example.myinstagram.login.data.FakeDataSource
+import com.example.myinstagram.login.data.LoginRepository
 import com.example.myinstagram.login.presentation.LoginPresenter
+import com.example.myinstagram.main.view.MainActivity
 
 class LoginActivity : AppCompatActivity(), Login.View {
     private lateinit var binding: ActivityLoginBinding
@@ -17,8 +21,9 @@ class LoginActivity : AppCompatActivity(), Login.View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = LoginPresenter(this)
-        presenter.login("", "")
+        // Aqui View ->  Presenter
+        val repository = LoginRepository(FakeDataSource())
+        presenter = LoginPresenter(this, repository)
 
         with(binding) {
             editEmail.addTextChangedListener(watcher)
@@ -26,16 +31,14 @@ class LoginActivity : AppCompatActivity(), Login.View {
                 displayEmailFailure(null)
             })
             editPassword.addTextChangedListener(watcher)
-            editPassword.addTextChangedListener(TxtWatcher{
+            editPassword.addTextChangedListener(TxtWatcher {
                 displayPasswordFailure(null)
             })
 
             btnLogin.setOnClickListener {
-                presenter.login(editEmail.toString(), editPassword.toString())
+                presenter.login(editEmail.text.toString(), editPassword.text.toString())
             }
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                btnLogin.showProgressBar(false)
-//            }, 2000)
+
         }
 
     }
@@ -55,18 +58,20 @@ class LoginActivity : AppCompatActivity(), Login.View {
     }
 
     override fun displayEmailFailure(emailError: Int?) {
-        binding.editEmail.error = emailError?.let { getString(it) }
+        binding.textInputLayoutEmail.error = emailError?.let { getString(it) }
     }
 
     override fun displayPasswordFailure(passwordError: Int?) {
-        binding.editPassword.error = passwordError?.let { getString(it) }
+        binding.textInputLayoutPassword.error = passwordError?.let { getString(it) }
     }
 
     override fun onUserAuthenticated() {
-        // Ir para tela inicial
+        val intent = Intent(this,MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
-    override fun onUserUnauthorized() {
-        // Mostrar um alerta
+    override fun onUserUnauthorized(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
