@@ -1,15 +1,12 @@
 package com.example.myinstagram.register.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
-import com.example.myinstagram.common.base.DependencyInjector
-import com.example.myinstagram.login.Login
-import com.example.myinstagram.login.presentation.LoginPresenter
-import com.example.myinstagram.register.RegisterEmail
-import com.example.myinstagram.register.presentation.RegisterEmailPresenter
+import com.example.myinstagram.register.view.RegisterNamePasswordFragment.Companion.KEY_EMAIL
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +17,31 @@ class RegisterActivity : AppCompatActivity() {
 
 
         supportFragmentManager.beginTransaction().apply {
-            add(R.id.register_fragment,fragment)
+            add(R.id.register_fragment, fragment)
+            commit()
+        }
+    }
+
+    override fun goToNameAndPasswordScreen(email: String) {
+        val fragment = RegisterNamePasswordFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_EMAIL, email)
+            }
+
+        }
+        replaceFragment(fragment)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        if (supportFragmentManager.findFragmentById(R.id.register_fragment) == null) {
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.register_fragment, fragment)
+                commit()
+            }
+        }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.register_fragment, fragment)
+            addToBackStack(null)
             commit()
         }
     }

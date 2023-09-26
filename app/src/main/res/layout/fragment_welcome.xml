@@ -30,7 +30,7 @@
 
 
             <com.example.myinstagram.login.view.LoadingButton
-                android:id="@+id/btn_name_btn_next"
+                android:id="@+id/register_name_btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
