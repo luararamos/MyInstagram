@@ -1,23 +1,24 @@
-package com.example.myinstagram.login
+package com.example.myinstagram.register
 
 import androidx.annotation.StringRes
 import com.example.myinstagram.common.base.BasePresenter
 import com.example.myinstagram.common.base.BaseView
 
-interface Login {
-    // camada presenter
+interface RegisterNameAndPassword {
     interface Presenter : BasePresenter {
-        fun login(email: String, password: String)
+        fun create(email: String, name: String, password: String, confirm: String)
+
     }
 
-    //camada de view
     interface View : BaseView<Presenter> {
         fun showProgress(enabled: Boolean)
-        fun displayEmailFailure(@StringRes emailError: Int?)
+
+        fun displayNameFailure(@StringRes nameError: Int?)
+
         fun displayPasswordFailure(@StringRes passwordError: Int?)
-        fun onUserAuthenticated()
-        fun onUserUnauthorized(message: String)
+
+        fun onCreateFailure(message: String)
+
+        fun onCreateSuccess(name: String)
     }
-
-
 }
