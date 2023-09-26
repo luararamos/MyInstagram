@@ -10,6 +10,7 @@ import com.example.myinstagram.databinding.ActivityLoginBinding
 import com.example.myinstagram.login.Login
 import com.example.myinstagram.login.presentation.LoginPresenter
 import com.example.myinstagram.main.view.MainActivity
+import com.example.myinstagram.register.view.RegisterActivity
 
 class LoginActivity : AppCompatActivity(), Login.View {
     private lateinit var binding: ActivityLoginBinding
@@ -36,8 +37,12 @@ class LoginActivity : AppCompatActivity(), Login.View {
             btnLogin.setOnClickListener {
                 presenter.login(editEmail.text.toString(), editPassword.text.toString())
             }
+            txtHaveAccount.setOnClickListener {
+                goToRegisterScreen()
+            }
 
         }
+
 
     }
 
@@ -71,5 +76,11 @@ class LoginActivity : AppCompatActivity(), Login.View {
 
     override fun onUserUnauthorized(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun goToRegisterScreen(){
+        val intent = Intent(this,RegisterActivity::class.java)
+        startActivity(intent)
+
     }
 }
