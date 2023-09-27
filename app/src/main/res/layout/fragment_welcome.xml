@@ -14,30 +14,30 @@
         app:layout_constraintVertical_bias="0.4"
         tools:ignore="ScrollViewCount">
 
-        <TextView
-            android:id="@+id/text_welcome"
-            style="Theme.MyInstagram.TextViewBase.Form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_to_instagram"/>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="32dp"
             tools:context=".login.view.LoginActivity">
 
-
-            <com.example.myinstagram.login.view.LoadingButton
-                android:id="@+id/register_name_btn_next"
+            <TextView
+                android:id="@+id/text_welcome"
+                style="@style/Theme.MyInstagram.TextViewBase.Form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
+                android:text="@string/welcome_to_instagram"/>
+
+            <com.example.myinstagram.login.view.LoadingButton
+                android:id="@+id/welcome_btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
                 app:text="@string/next" />
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
     </ScrollView>
 
     <View
@@ -59,6 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

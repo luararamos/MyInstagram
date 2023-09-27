@@ -23,7 +23,7 @@ class CustomDialog(context: Context) : Dialog(context) {
 
         binding = DialogCustomBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.dialog_custom)
+        setContentView(binding.root)
     }
 
     override fun setTitle(titleId: Int) {
