@@ -20,8 +20,8 @@
             android:paddingHorizontal="32dp"
             tools:context=".login.view.LoginActivity">
 
-            <ImageView
-                android:id="@+id/txt_title"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_register_photo_profile"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
@@ -42,7 +42,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
-            <com.example.myinstagram.login.view.LoadingButton
+            <com.example.myinstagram.common.view.LoadingButton
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
