@@ -76,14 +76,7 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
 
     private fun onCropImageResult(uri: Uri?) {
         if (uri != null) {
-            val bitmap = if (Build.VERSION.SDK_INT >= 28 ){
-                val source = ImageDecoder.createSource(requireContext().contentResolver, uri)
-                ImageDecoder.decodeBitmap(source)
-            }else{
-                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-            }
-            binding?.imgRegisterPhotoProfile?.setImageBitmap(bitmap)
-
+            binding?.imgRegisterPhotoProfile?.setImageURI(uri)
         }
     }
 
