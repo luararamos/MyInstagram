@@ -19,6 +19,6 @@ interface RegisterNameAndPassword {
 
         fun onCreateFailure(message: String)
 
-        fun onCreateSuccess(name: String)
+        fun goToWelcomeScreen(name: String)
     }
 }

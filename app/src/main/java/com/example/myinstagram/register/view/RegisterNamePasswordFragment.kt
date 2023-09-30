@@ -1,5 +1,6 @@
 package com.example.myinstagram.register.view
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
@@ -86,10 +87,16 @@ class RegisterNamePasswordFragment: Fragment(), RegisterNameAndPassword.View {
                 && binding?.editPasswordConfirm?.text.toString().isNotEmpty()
     }
 
-    override fun onCreateSuccess(name: String) {
-       // abrir tela bem - vindo
+    override fun goToWelcomeScreen(name: String) {
+       fragmentAttachListener?.goToWelcomeScreen(name)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentAttachListener){
+            fragmentAttachListener = context
+        }
+    }
     override fun onDestroy() {
         binding = null
         fragmentAttachListener = null
