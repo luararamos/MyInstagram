@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MyInstagram.FormContainer">
-        <item name="android:layout_marginStart">36dp</item>
-        <item name="android:layout_marginEnd">36dp</item>
-    </style>
-    <style name="Theme.MyInstagram.FormEditText" parent="Theme.MyInstagram.FormContainer">
+    <style name="Theme.MyInstagram.FormEditText" >
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/edit_text_background</item>
@@ -24,8 +20,6 @@
         <item name="android:backgroundTint">@color/button_backgroung</item>
         <item name="android:padding">16dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:layout_marginStart">36dp</item>
-        <item name="android:layout_marginEnd">36dp</item>
     </style>
 
     <style name="Theme.MyInstagram.TextViewBase">
