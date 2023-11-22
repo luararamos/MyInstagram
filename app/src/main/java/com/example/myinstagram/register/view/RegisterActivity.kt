@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
+import com.example.myinstagram.common.extension.hideKeyboard
 import com.example.myinstagram.databinding.ActivityRegisterBinding
 import com.example.myinstagram.main.view.MainActivity
 import com.example.myinstagram.register.view.CropperImageFragment.Companion.KEY_URI
@@ -69,16 +70,18 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
         startActivity(intent)
     }
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            openImageCropper(it)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                openImageCropper(it)
+            }
         }
-    }
-    private val getCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { saved ->
-        if (saved){
-            openImageCropper(currentPhoto)
+    private val getCamera =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { saved ->
+            if (saved) {
+                openImageCropper(currentPhoto)
+            }
         }
-    }
 
     override fun goToGalleryScreen() {
         getContent.launch("image/*")
@@ -107,9 +110,8 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
     private fun createImageFile(): File {
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timestamp}", ".jpg", dir)
+        return File.createTempFile("JPEG_${timestamp}_", ".jpg", dir)
     }
-
 
 
     private fun replaceFragment(fragment: Fragment) {
@@ -118,15 +120,17 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
                 add(R.id.register_fragment, fragment)
                 commit()
             }
+        } else {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.register_fragment, fragment)
+                addToBackStack(null)
+                commit()
+            }
         }
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.register_fragment, fragment)
-            addToBackStack(null)
-            commit()
-        }
+        hideKeyboard()
     }
 
-    private fun openImageCropper(uri: Uri){
+    private fun openImageCropper(uri: Uri) {
         val fragment = CropperImageFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(KEY_URI, uri)

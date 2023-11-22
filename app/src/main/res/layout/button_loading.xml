@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,6 +13,8 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"
         android:elevation="2dp"
-        android:indeterminateTint="@color/white" />
+        android:indeterminateTint="@color/white"
+        tools:visibility= "visible"
+        android:indeterminateTintMode="src_in"/>
 
 </merge>
