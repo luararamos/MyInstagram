@@ -15,8 +15,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginHorizontal="36dp"
+            android:orientation="vertical"
             tools:context=".login.view.LoginActivity">
 
             <ImageView
@@ -46,10 +46,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_password"
                 style="@style/Theme.MyInstagram.FormEditTextInput"
-                app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintEnabled="false">
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_password"
@@ -113,6 +113,7 @@
         android:padding="16dp"
         android:text="@string/does_not_have_account"
         android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
