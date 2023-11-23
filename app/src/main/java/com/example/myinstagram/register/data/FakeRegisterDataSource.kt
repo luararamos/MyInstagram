@@ -1,8 +1,10 @@
 package com.example.myinstagram.register.data
 
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import com.example.myinstagram.common.model.Database
+import com.example.myinstagram.common.model.Photo
 import com.example.myinstagram.common.model.UserAuth
 import java.util.UUID
 
@@ -38,6 +40,26 @@ class FakeRegisterDataSource : RegisterDataSource {
                 val created = Database.usersAuth.add(newUser)
                 if (created) {
                     Database.sessionAuth = newUser
+                    callback.onSuccess()
+                } else {
+                    callback.onFailure("Erro interno no servidor.")
+                }
+            }
+            callback.onComplete()
+        }, 2000)
+    }
+
+    override fun updateUser(phtoUri: Uri, callback: RegisterCallback) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val userAuth = Database.sessionAuth
+
+
+            if (userAuth == null) {
+                callback.onFailure("Usuário não encontrado")
+            } else {
+                val newPhoto = Photo(userAuth.uuid, phtoUri)
+                val created = Database.photos.add(newPhoto)
+                if (created) {
                     callback.onSuccess()
                 } else {
                     callback.onFailure("Erro interno no servidor.")
