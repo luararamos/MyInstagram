@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
 import com.example.myinstagram.camera.view.CameraFragment
-import com.example.myinstagram.common.extension.hideKeyboard
-import com.example.myinstagram.common.extension.replaceFragment
 import com.example.myinstagram.databinding.ActivityMainBinding
 import com.example.myinstagram.home.view.HomeFragment
 import com.example.myinstagram.profile.view.ProfileFragment
 import com.example.myinstagram.search.view.SearchFragment
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var searchFragment: Fragment
     private lateinit var cameraFragment: Fragment
     private lateinit var profileFragment: Fragment
-    private var currentFragment: Fragment ?= null
+    private var currentFragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -53,31 +53,61 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.mainBottomNav.selectedItemId = R.id.menu_bottom_home
     }
 
+    private fun setScrollToolbarEnabled(enabled: Boolean) {
+        val params = binding.mainToolbar.layoutParams as AppBarLayout.LayoutParams
+        val coordinatorParams = binding.mainAppBar.layoutParams as CoordinatorLayout.LayoutParams
+        if (enabled) {
+            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+            coordinatorParams.behavior = AppBarLayout.Behavior()
+        } else {
+            params.scrollFlags = 0
+            coordinatorParams.behavior = null
+        }
+        binding.mainAppBar.layoutParams = coordinatorParams
+
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         currentFragment = null
+        var scrollToolbarEnabled = false
         when (item.itemId) {
-
             R.id.menu_bottom_home -> {
-                if (currentFragment ==  homeFragment) return false
+                if (currentFragment == homeFragment) return false
                 currentFragment = homeFragment
             }
+
             R.id.menu_bottom_search -> {
-                if (currentFragment ==  searchFragment) return false
+                if (currentFragment == searchFragment) return false
                 currentFragment = searchFragment
             }
+
             R.id.menu_bottom_add -> {
-                if (currentFragment ==  cameraFragment) return false
+                if (currentFragment == cameraFragment) return false
                 currentFragment = cameraFragment
             }
+
             R.id.menu_bottom_profile -> {
-                if (currentFragment ==  profileFragment) return false
+                if (currentFragment == profileFragment) return false
                 currentFragment = profileFragment
+                scrollToolbarEnabled = true
             }
         }
 
+        setScrollToolbarEnabled(scrollToolbarEnabled)
+
         currentFragment?.let {
-            replaceFragment(R.id.main_fragment, it)
+            val prev =
+                supportFragmentManager.findFragmentByTag(it.javaClass.name) // PASSAR UM NOME da CLASSE
+
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.main_fragment, it, it.javaClass.name)
+                if (prev == null) // CHECA SE FOR A PRIMEIRA VEZ, ENTÃO PODE EMPILHAR
+                    addToBackStack(it.javaClass.name) // ADICIONA O NOME PARA A PROXIMA INTERAÇÃO
+                commit()
+            }
         }
         return true
     }
+
+
 }
