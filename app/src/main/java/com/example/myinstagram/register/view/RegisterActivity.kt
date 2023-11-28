@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
 import com.example.myinstagram.common.extension.hideKeyboard
+import com.example.myinstagram.common.extension.replaceFragment
 import com.example.myinstagram.databinding.ActivityRegisterBinding
 import com.example.myinstagram.main.view.MainActivity
 import com.example.myinstagram.register.view.CropperImageFragment.Companion.KEY_URI
@@ -115,19 +116,7 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
 
 
     private fun replaceFragment(fragment: Fragment) {
-        if (supportFragmentManager.findFragmentById(R.id.register_fragment) == null) {
-            supportFragmentManager.beginTransaction().apply {
-                add(R.id.register_fragment, fragment)
-                commit()
-            }
-        } else {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.register_fragment, fragment)
-                addToBackStack(null)
-                commit()
-            }
-        }
-        hideKeyboard()
+        replaceFragment(R.id.register_fragment, fragment)
     }
 
     private fun openImageCropper(uri: Uri) {
