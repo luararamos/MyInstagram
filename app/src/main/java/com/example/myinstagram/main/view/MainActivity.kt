@@ -96,13 +96,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setScrollToolbarEnabled(scrollToolbarEnabled)
 
         currentFragment?.let {
-            val prev =
-                supportFragmentManager.findFragmentByTag(it.javaClass.name) // PASSAR UM NOME da CLASSE
+            val prev = supportFragmentManager.findFragmentByTag(it.javaClass.name)
 
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.main_fragment, it, it.javaClass.name)
-                if (prev == null) // CHECA SE FOR A PRIMEIRA VEZ, ENTÃO PODE EMPILHAR
-                    addToBackStack(it.javaClass.name) // ADICIONA O NOME PARA A PROXIMA INTERAÇÃO
+                if (prev == null)
+                    addToBackStack(it.javaClass.name)
                 commit()
             }
         }
