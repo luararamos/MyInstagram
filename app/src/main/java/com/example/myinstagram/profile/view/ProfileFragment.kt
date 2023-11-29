@@ -7,53 +7,65 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myinstagram.R
+import com.example.myinstagram.common.base.BaseFragment
+import com.example.myinstagram.common.model.Post
+import com.example.myinstagram.common.model.UserAuth
+import com.example.myinstagram.databinding.FragmentProfileBinding
 
-class ProfileFragment: Fragment() {
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
+    R.layout.fragment_profile,
+    FragmentProfileBinding::bind
+), Profile.View {
+
+    override lateinit var presenter: Profile.Presenter
+
+    private val adapter = PostAdapter()
+    override fun setupViews() {
+        binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding?.profileRv?.adapter = adapter
+
+        presenter.fetchUserProfile()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupPresenter() {
+        //TODO presenter
+    }
 
-        val rv = view.findViewById<RecyclerView>(R.id.profile_rv)
-        rv.layoutManager  = GridLayoutManager(requireContext(), 3)
-        rv.adapter = PostAdapter()
+    override fun getMenu(): Int {
+        return R.menu.menu_profile
+    }
 
+    override fun showProgress(enebled: Boolean) {
+        binding?.profileProgress?.visibility = if(enebled) View.VISIBLE else View.GONE
+    }
+
+    override fun displayUserProfile(userAuth: UserAuth) {
+        binding?.txtProfilePostCount?.text = userAuth.postCount.toString()
+        binding?.txtProfileFollowingCount?.text = userAuth.followingCount.toString()
+        binding?.txtProfileFollowersCount?.text = userAuth.followersCount.toString()
+        binding?.txtProfileUsername?.text = userAuth.name
+        binding?.txtProfileBio?.text = "TODO"
+        presenter.fetchUserPost()
+    }
+
+    override fun displayRequestFailure(message: String) {
+        Toast.makeText(requireContext(),message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun displayEmptyPost() {
+        binding?.txtProfileEmpty?.visibility = View.VISIBLE
+        binding?.profileRv?.visibility = View.GONE
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun displayFullPosts(posts: List<Post>) {
+        binding?.txtProfileEmpty?.visibility = View.GONE
+        binding?.profileRv?.visibility = View.VISIBLE
+        adapter.items = posts
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_profile, menu)
-    }
-    private class PostAdapter: RecyclerView.Adapter<PostAdapter.PostViewHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-            val inflater =LayoutInflater.from(parent.context).inflate(R.layout.item_profile_grid, parent, false)
-            return PostViewHolder(inflater)
-        }
-
-        override fun getItemCount(): Int {
-            return 30
-        }
-
-        override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-            holder.bind(R.drawable.ic_insta_add)
-        }
-
-        private class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            fun bind(image: Int){
-                itemView.findViewById<ImageView>(R.id.item_profile_img_grid).setImageResource(image)
-            }
-        }
-    }
 }
