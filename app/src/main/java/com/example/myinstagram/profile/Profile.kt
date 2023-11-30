@@ -1,4 +1,4 @@
-package com.example.myinstagram.profile.view
+package com.example.myinstagram.profile
 
 import com.example.myinstagram.common.base.BasePresenter
 import com.example.myinstagram.common.base.BaseView

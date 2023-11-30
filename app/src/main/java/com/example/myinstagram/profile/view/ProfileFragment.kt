@@ -1,20 +1,16 @@
 package com.example.myinstagram.profile.view
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myinstagram.R
 import com.example.myinstagram.common.base.BaseFragment
+import com.example.myinstagram.common.base.DependencyInjector
 import com.example.myinstagram.common.model.Post
 import com.example.myinstagram.common.model.UserAuth
 import com.example.myinstagram.databinding.FragmentProfileBinding
+import com.example.myinstagram.profile.Profile
+import com.example.myinstagram.profile.presenter.ProfilePresenter
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     R.layout.fragment_profile,
@@ -32,7 +28,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     }
 
     override fun setupPresenter() {
-        //TODO presenter
+        val repository = DependencyInjector.profileRepository()
+        presenter = ProfilePresenter(this, repository)
     }
 
     override fun getMenu(): Int {
@@ -40,7 +37,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     }
 
     override fun showProgress(enebled: Boolean) {
-        binding?.profileProgress?.visibility = if(enebled) View.VISIBLE else View.GONE
+        binding?.profileProgress?.visibility = if (enebled) View.VISIBLE else View.GONE
     }
 
     override fun displayUserProfile(userAuth: UserAuth) {
@@ -53,7 +50,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     }
 
     override fun displayRequestFailure(message: String) {
-        Toast.makeText(requireContext(),message, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun displayEmptyPost() {
