@@ -23,7 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(
     override fun setupPresenter() {
         //TODO("Not yet implemented")
     }
-    override fun setupViews() {
+    override fun setupViews()  {
         binding?.homeRv?.layoutManager = LinearLayoutManager(requireContext())
         binding?.homeRv?.adapter = PostAdapter()
     }

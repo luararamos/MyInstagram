@@ -43,7 +43,6 @@ abstract class BaseFragment<T, P : BasePresenter>(
         binding = bind(view)
 
         setupViews()
-
     }
 
     abstract fun setupViews()
