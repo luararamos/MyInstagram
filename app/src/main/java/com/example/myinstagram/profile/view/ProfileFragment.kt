@@ -1,5 +1,6 @@
 package com.example.myinstagram.profile.view
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,10 +33,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
         presenter = ProfilePresenter(this, repository)
     }
 
-    override fun getMenu(): Int {
-        return R.menu.menu_profile
-    }
-
     override fun showProgress(enebled: Boolean) {
         binding?.profileProgress?.visibility = if (enebled) View.VISIBLE else View.GONE
     }
@@ -63,6 +60,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
         binding?.txtProfileEmpty?.visibility = View.GONE
         binding?.profileRv?.visibility = View.VISIBLE
         adapter.items = posts
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun getMenu(): Int {
+        return R.menu.menu_profile
     }
 
 }
