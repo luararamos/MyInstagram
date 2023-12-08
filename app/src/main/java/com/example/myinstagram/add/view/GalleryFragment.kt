@@ -1,4 +1,5 @@
-package com.example.myinstagram.camera.view
+package com.example.myinstagram.add.view
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myinstagram.R
 
-class CameraFragment: Fragment() {
+class GalleryFragment: Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         return inflater.inflate(R.layout.fragment_gallery, container, false)
     }

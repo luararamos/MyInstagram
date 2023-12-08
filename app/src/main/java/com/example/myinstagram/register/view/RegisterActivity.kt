@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.myinstagram.R
-import com.example.myinstagram.common.extension.hideKeyboard
 import com.example.myinstagram.common.extension.replaceFragment
 import com.example.myinstagram.databinding.ActivityRegisterBinding
 import com.example.myinstagram.main.view.MainActivity
