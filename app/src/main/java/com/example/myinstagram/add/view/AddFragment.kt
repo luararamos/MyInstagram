@@ -1,6 +1,8 @@
 package com.example.myinstagram.add.view
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -23,6 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class AddFragment : Fragment(R.layout.fragment_add){
     private var binding: FragmentAddBinding? = null
+    private var addListener: AddListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +35,16 @@ class AddFragment : Fragment(R.layout.fragment_add){
             uri?.let {
                 val intent = Intent(requireContext(), AddActivity::class.java)
                 intent.putExtra("photoUri", uri)
-                startActivity(intent)
+                addActivityResult.launch(intent)
             }
 
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is AddListener){
+            addListener = context
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,6 +91,13 @@ class AddFragment : Fragment(R.layout.fragment_add){
         setFragmentResult("cameraKey", bundleOf("startCamera" to true))
     }
 
+    private val addActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == Activity.RESULT_OK){
+            addListener?.onPostCreated()
+        }
+
+    }
+
     private val getPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (allPermissionsGranted()) {
@@ -90,12 +108,11 @@ class AddFragment : Fragment(R.layout.fragment_add){
 
         }
 
-    private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(
-            requireContext(),
-            REQUIRED_PERMISSION
-        ) == PackageManager.PERMISSION_GRANTED
+    private fun allPermissionsGranted() = ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION) == PackageManager.PERMISSION_GRANTED
 
+    interface AddListener {
+        fun onPostCreated()
+    }
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }

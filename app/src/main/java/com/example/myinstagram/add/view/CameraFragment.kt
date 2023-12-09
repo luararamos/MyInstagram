@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,28 +61,18 @@ class CameraFragment : Fragment() {
     private fun takePhoto(){
 
         val imageCapture = imageCapture ?: return
-
         val photoFile = Files.generateFile(requireActivity())
-        Log.i("Teste", "oi")
-
-        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val p = File.createTempFile("JPEG_${timestamp}_", ".jpg", dir)
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(p).build()
-
-
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(p)
+                    val savedUri = Uri.fromFile(photoFile)
                     setFragmentResult("takePhotoKey", bundleOf("uri" to savedUri))
                     Log.i("Teste", savedUri.toString())
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    val teste = "oi"
                     Log.e("Teste", "Failure to take picture", exception)
                 }
 
@@ -99,6 +90,7 @@ class CameraFragment : Fragment() {
                     it.setSurfaceProvider(previewView.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder()
+                .setTargetResolution(Size(480, 480))
                 .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA

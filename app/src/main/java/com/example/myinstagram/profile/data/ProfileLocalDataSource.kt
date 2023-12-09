@@ -1,13 +1,14 @@
 package com.example.myinstagram.profile.data
 
+import com.example.myinstagram.common.base.Cache
 import com.example.myinstagram.common.base.RequestCallback
 import com.example.myinstagram.common.model.Database
 import com.example.myinstagram.common.model.Post
 import com.example.myinstagram.common.model.UserAuth
 
 class ProfileLocalDataSource(
-    private val profileCache: ProfileCache<UserAuth>,
-    private val postsCache: ProfileCache<List<Post>>
+    private val profileCache: Cache<UserAuth>,
+    private val postsCache: Cache<List<Post>>
 ) : ProfileDataSource {
     override fun fetchUserProfile(userUUID: String, callback: RequestCallback<UserAuth>) {
         val userAuth = profileCache.get(userUUID)
@@ -37,7 +38,7 @@ class ProfileLocalDataSource(
         profileCache.put(response)
     }
 
-    override fun putPosts(response: List<Post>) {
+    override fun putPosts(response: List<Post>?) {
         postsCache.put(response)
     }
 }

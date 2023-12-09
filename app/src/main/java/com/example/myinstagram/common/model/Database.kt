@@ -1,5 +1,7 @@
 package com.example.myinstagram.common.model
 
+import android.net.Uri
+import java.io.File
 import java.util.UUID
 
 object Database {
@@ -26,6 +28,23 @@ object Database {
         followers[userB.uuid] = hashSetOf()
         posts[userB.uuid] = hashSetOf()
         feeds[userB.uuid] = hashSetOf()
+
+        feeds[userA.uuid]?.addAll(
+            arrayListOf(
+                Post(UUID.randomUUID().toString(), Uri.fromFile(File("")),
+                    "desc", System.currentTimeMillis(), userA),
+                Post(UUID.randomUUID().toString(), Uri.fromFile(File("")),
+                    "desc", System.currentTimeMillis(), userA),
+                Post(UUID.randomUUID().toString(), Uri.fromFile(File("")),
+                    "desc", System.currentTimeMillis(), userA),
+                Post(UUID.randomUUID().toString(), Uri.fromFile(File("")),
+                    "desc", System.currentTimeMillis(), userA)
+            )
+        )
+
+        feeds[userA.uuid]?.toList()?.let {
+            feeds[userB.uuid]?.addAll(it)
+        }
 
         sessionAuth = usersAuth.first()
     }
